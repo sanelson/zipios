@@ -1,0 +1,5 @@
+Makefile
+Makefile.in
+zipios-config.h*
+stamp-h*
+.deps

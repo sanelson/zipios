@@ -1,0 +1,12 @@
+Makefile
+Makefile.in
+stamp-h*
+appendzip
+zipios.plg
+zipios.ncb
+Debug
+Release
+*.lo
+libzipios.la
+.deps
+.libs
