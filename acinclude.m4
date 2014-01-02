@@ -96,9 +96,13 @@ AC_DEFUN([AC_CXX_NAMESPACES], [
       AC_LANG_PUSH([C++])
       AC_COMPILE_IFELSE(
         [
-          namespace Outer { namespace Inner { int i = 0; } }
-          using namespace Outer::Inner;
-          int main() { return i; }
+          AC_LANG_SOURCE(
+            [
+              namespace Outer { namespace Inner { int i = 0; } }
+              using namespace Outer::Inner;
+              int main() { return i; }
+            ],
+          )
         ],
         [ac_cv_cxx_namespaces=yes],
         [ac_cv_cxx_namespaces=no]
