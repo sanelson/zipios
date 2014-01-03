@@ -48,35 +48,33 @@ ConstEntryPointer ZipInputStreambuf::getNextEntry() {
 
   // read the zip local header
   istream is( _inbuf ) ; // istream does not destroy the streambuf.
-  is.exceptions( ios::eofbit | ios::failbit | ios::badbit );
-
-  try {
-    is >> _curr_entry ;
-    if ( _curr_entry.isValid() ) {
-      _data_start = _inbuf->pubseekoff(0, ios::cur, ios::in);
-      if ( _curr_entry.getMethod() == DEFLATED ) {
-        _open_entry = true ;
-        reset() ; // reset inflatestream data structures 
-        // cerr << "deflated" << endl ;
-      } else if ( _curr_entry.getMethod() == STORED ) {
-        _open_entry = true ;
-        _remain = _curr_entry.getSize() ;
-        // Force underflow on first read:
-        setg( &( _outvec[ 0 ] ),
-              &( _outvec[ 0 ] ) + _outvecsize,
-              &( _outvec[ 0 ] ) + _outvecsize );
-        // cerr << "stored" << endl ;
-      } else {
-        _open_entry = false ; // Unsupported compression format.
-        throw FCollException( "Unsupported compression format" ) ;
-      }
+  is.exceptions(istream::eofbit | istream::failbit | istream::badbit);
+  is >> _curr_entry ;
+  if ( _curr_entry.isValid() ) {
+    _data_start = _inbuf->pubseekoff(0, ios::cur,
+                     ios::in);
+    if ( _curr_entry.getMethod() == DEFLATED ) {
+      _open_entry = true ;
+      reset() ; // reset inflatestream data structures 
+//        cerr << "deflated" << endl ;
+    } else if ( _curr_entry.getMethod() == STORED ) {
+      _open_entry = true ;
+      _remain = _curr_entry.getSize() ;
+      // Force underflow on first read:
+      setg( &( _outvec[ 0 ] ),
+        &( _outvec[ 0 ] ) + _outvecsize,
+        &( _outvec[ 0 ] ) + _outvecsize ) ;
+//        cerr << "stored" << endl ;
+    } else {
+      _open_entry = false ; // Unsupported compression format.
+      throw FCollException( "Unsupported compression format" ) ;
     }
-  } catch (...) {
+  } else {
     _open_entry = false ;
   }
 
   if ( _curr_entry.isValid() && _curr_entry.trailingDataDescriptor() )
-    throw FCollException( "Trailing data descriptor in zip file not supported" ) ; 
+    throw FCollException( "Trailing data descriptor in zip file not supported" ) ;
   return new ZipLocalEntry( _curr_entry ) ;
 }
 
