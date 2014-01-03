@@ -24,7 +24,7 @@
 
 #include "directory.h"
 
-#if defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(UNIX_LIKE)
 #  define BOOST_UNIX 1
 #elif defined(_WINDOWS)
 #  define BOOST_WINNT 1

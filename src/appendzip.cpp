@@ -5,6 +5,8 @@
 #include "zipios++/ziphead.h"
 #include "zipios++/zipheadio.h"
 
+#include <cstdlib>
+
 using namespace std ;
 using namespace zipios ;
 

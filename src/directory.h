@@ -31,11 +31,16 @@
 #include <string>
 #include <ctime>
 #include <stdexcept>
+#include <cstddef>
+
+#if defined(unix) || defined(__unix) || defined(__unix__) || defined(__APPLE__)
+#  define UNIX_LIKE
+#endif
 
 // #include <boost.h>  Contents of boost.h
 
 // Allow control over DLL version being built
-#if defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(UNIX_LIKE)
 #  define BOOST_DECL
 #elif defined(ZIPIOS_DLL)
 #  ifdef ZIPIOS_EXPORTS
@@ -48,7 +53,7 @@
 #endif
 // end of contents of boost.h
 
-#if defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(UNIX_LIKE)
 #include <sys/types.h>
 #endif
 
@@ -232,7 +237,7 @@ namespace boost
 
 #endif
 
-#if defined(unix) || defined(__unix) || defined(__unix__)
+#if defined(UNIX_LIKE)
 
 		struct is_link { typedef bool value_type; };
 		template <> bool get<is_link>(dir_it const &);
