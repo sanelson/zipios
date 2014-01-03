@@ -1,6 +1,6 @@
 AC_PREREQ(2.59)
 
-AC_INIT([zipios++], [0.1.5], [zipios-devel@lists.sourceforge.net], [zipios++])
+AC_INIT([zipios++], [0.1.5.9.1], [zipios-devel@lists.sourceforge.net], [zipios++])
 AC_CONFIG_SRCDIR([src/appendzip.cpp])
 AC_CONFIG_HEADER([zipios++/zipios-config.h])
 
@@ -72,6 +72,7 @@ AC_CHECK_FUNCS([uname])
 
 AC_CONFIG_FILES([
   Makefile
+  zipios++.pc
   src/Makefile
   tests/Makefile
   zipios++/Makefile

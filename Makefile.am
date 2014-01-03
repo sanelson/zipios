@@ -2,12 +2,17 @@
 EXTRA_DIST = doxyfile doc/images win32 zipios++.spec.in
 SUBDIRS = zipios++ src tests
 
+pkgconfigdatadir = $(libdir)/pkgconfig
+
+pkgconfigdata_DATA = zipios++.pc
+
 DOCTOOL = doxygen
 DOCCONF = doxyfile
 
+# Format from: http://binarystatic.wordpress.com/2010/02/18/how-to-convert-git-log-to-changelog/
 .PHONY : ChangeLog
 ChangeLog :
-	cvs2cl --prune --separate-header --global-opts -z3
+	git --no-pager log --format="%ai %aN %n%n%x09* %s%d%n" > ChangeLog
 
 .PHONY : doc
 doc :
